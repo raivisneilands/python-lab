@@ -1,0 +1,84 @@
+# Learning AI and Business automation using Python
+
+This journey is meant to take me from beginner to experienced Python developer and hopefully even become something successful. The idea for this journey is simple - start from Python basics and move to advanced topics like AI, automation, etc.
+
+The goal is to develop skills enough to build automation tools for local businesses and earn income from these tools and projects.
+
+And I believe that if I document this, then I would be more motivated to keep going building projects and better understanding my own journey. I will be honest - I have no idea what will I do with this document after I am done. Maybe I will make it public and available for others. Maybe I will keep it private. I guess we will see.
+
+So this journey is made using AI. It is split into chapters. Each chapter has things to learn and projects to build. And I will try to explain each project - the idea of the project and what am I doing to build the project.
+
+## Chapter 1: Python Basics
+
+I have learned basics of python programming. Altough it wasn't too difficult because these are the same for most programming languages. This includes basics like variables, conditionals, loops, lists, etc. And I guess these are the most fundamental of any programming languages.
+
+I guess for now most difficult for me was the file handling as I haven't worked with files previously with python programming language. This means the file handling in general, not data reading from files. I have not touched that topic yet, that is still to come. One more thing which I struggle with the most is consistency. For example one day I am pretty motivated to write some code, then I write maybe for few minutes or few lines, and then my motivation disappears and I could say that it disappears for multiple days, if not for a whole week. In my opinion if I fix the consistency issue then I could learn python pretty quickly and start actually producing value to companies.
+
+Now moving on to projects. I have already built the first three projects so they may not be as descriptive since I do not remember perfectly what was my idea for using the tools I used. But starting with the 4th project it will be descriptive - with criteria, the reasoning for using the tools I used, etc.
+
+### Project 1: CLI Expense Tracker
+
+The idea was very simple. Use lists to store the expenses and user can manipulate with this array by adding/removing or editing expenses. At first I thought that good idea would be to use a dictionary, but then I had some issue with it, i don't remember it exactly but I think it was something to do with calculating total expenses. And then I simply switched to using singular list of objects like so: 
+```
+[{expense_name, amount}] 
+```
+and this way I could calculate total expense amount.
+
+At first the code was very singular and it repeated itself a lot, for example viewing the list of expenses before adding or removing expense. So I built 4 functions at first - viewing expenses, adding expenses, removing expenses, updating expenses. And after a while I decided to add the 5th function - calculating total expenses. I realize that theoretically this is a small project and I could have gone without but I want to practice writing clean code so I tried to build this as a senior developer.
+
+The most difficult things for me were working with arrays, especially the update function.
+
+### Project 2: File Organizer
+
+At first this project scared me a little and it took some time to start working this project. The idea of working with files sounded a bit advanced to me, and I have no idea why. Because when I started building this it went pretty smoothly and almost with no issues.
+
+The idea of the project is that it organizes files from a directory into multiple directories. I feel like this is the project where AI would thrive but since that is little beyond my skills I simply organized files based on extensions, for example jpg, png files goes into Images directory and so on. And I do realize that there are too much extensions, so I just used most commonly used extensions. The workflow of this project is following: the program runs through the directory and all of its files, after that it checks the extension. Let's say that the extension is .mov and then the program checks whether the directory for this extension exists and creates it if it doesn't exist. And then after that the file simply gets moved to the directory. And the directory deciding was based on the list of extensions hard-coded into a list. I believe that for learning purposes it is fine. And even if the extension found didn't exist in the list, then it would simply be moved to miscellaneous directory. And the found directories that were inside the to-organize directory were simply skipped.
+
+The most difficult thing for me I guess were working with modules that needed to be imported and reading through the documentation and finding the needed function for my situation. This wasn't impossible but comparing to simply writing basic python code this were a little more complex.
+
+### Project 3: API Data Collector
+
+This was pretty confusing as I didn't know what it meant, so I figured it meant simply get the data from third-party api and then handle it. This was pretty easy as it should be. For this project I also created virtual environment and learned about pip and packages, because I needed to install `requests` packages to get the data from the API. After that I simply chose the weather API and defined the base URL and then using that URL I requested weather data in Riga and then displayed it in the CLI.
+
+The issue I faced with this is finding out what was inside the response and then how can I process that response and show it to the user. For example showing temperature went something like this:
+```
+# Get the data
+r = requests.get(api_url)
+temp = r.json()[0]['temp']
+
+# Then show it to the user
+print(f"Current temperature: {temp} degrees celsius")
+
+```
+It is not too complicated but compared to everything else in this project this was the most complicated issue I faced.
+
+### Project 4: CSV/JSON Data Processing Tool
+
+Now we are all caught up and I haven't started this project yet and I figure that maybe documenting as I go through this project would be helpful for me.
+
+This project will be the project where I start using version control using `git`. I probably will set the repo to be all python learning projects and call it something like python-lab. For the first 3 project singular file was enough, but moving on I will create subfolders for multiple file usage.
+
+**Criteria for the project**
+
+I think before building this project is a good idea to set up the criteria for this project.
+1. Using environment variables, user should enter password (defined in the environment file) to see the data. User gets 3 attempts to enter the password. If 3 times entered incorrectly then the program exits.
+2. The program takes a CSV or JSON file as an input.
+3. Let's say the data is about weekly finances (income and expenses) throughout the year, so ideally 52 records. There can be missing data or data which is not correctly formatted, for example some string where it should be number.
+4. Program prints the overview of the file for user (e.g. 52 records processed, 43 records successfully processed) And output the reason for failed records (missing or invalid format). Program automatically groups the data into months (4 weeks = 1 month) and outputs it to user.
+5. After the program has printed out the monthly overview user is given the choices (should be available from different file):
+    - Exit the program.
+    - Calculate total money from the file.
+    - Calculate total money from user-chosen period (e.g. week 10 - week 48).
+    - Show weekly view of the finances.
+6. While building this project use `git` for version control with descriptive commits and multiple branches.
+7. Write at least 5 tests for this program.
+
+**Building the project**
+
+Now that the criteria is written we can start building it. I probably won't go into too much detail but I will try to explain what am I doing and why am I doing it.
+
+The first step probably should be getting the CSV/JSON file and read its contents. Theoretically I could hard-code the file, but I will get the file from command line when starting the program. Ideally something like this:
+```
+py csv-json-tool.py data.csv
+```
+This way the program is more dynamic and can work with different files and I wouldn't need to change the code too much.
