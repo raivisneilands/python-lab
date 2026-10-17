@@ -75,10 +75,24 @@ I think before building this project is a good idea to set up the criteria for t
 
 **Building the project**
 
-Now that the criteria is written we can start building it. I probably won't go into too much detail but I will try to explain what am I doing and why am I doing it.
+Before actually building anything let's initialize the repository with `git`
+
+Now I have initialized the repository or for short repo, and we can start building.
+
+After the criteria is written we can start building it. I probably won't go into too much detail but I will try to explain what am I doing and why am I doing it.
+
+This project will be inside a seperate directory as it will consist of multiple files.
 
 The first step probably should be getting the CSV/JSON file and read its contents. Theoretically I could hard-code the file, but I will get the file from command line when starting the program. Ideally something like this:
 ```
 py csv-json-tool.py data.csv
 ```
-This way the program is more dynamic and can work with different files and I wouldn't need to change the code too much.
+This way the program is more dynamic and can work with different files and I wouldn't need to change the code too much. 
+
+I have built a program which takes a path command argument, then it checks if it is a valid CSV file. And after that it reads the file. The CSV file I will be using is AI generated with some of the fields missing or incorrectly formatted as I want to practice working with incorrect or missing data.
+
+And I feel like this is a good time for a commit to `git` repo:
+```
+git add .
+git commit -m "Program can read CSV file from command argument"
+```
