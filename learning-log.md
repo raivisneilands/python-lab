@@ -98,3 +98,13 @@ git commit -m "Program can read CSV file from command argument"
 ```
 
 After this I added authentication if it can be called that. Basically it asks user for a password 3 times using a `for` loop and then compares it to the password defined in the `.env` file. For this I needed to install and import a `dotenv` package. And then again time for a commit.
+
+Next I grouped the weeks by months. And this wasn't as easy as it sounds, because there are 52 weeks in a year, and if I take 4 weeks per month then it would turn out to 13 months which obviously is not true. So in the end I decided to consider that 4 months will have an extra week, which still is false, but I think this is better than having 13 months.
+
+Speaking practically I created dictionary with months as keys and empty lists as values. After that I created a list for weeks per month. And then I checked for missing data in the amounts or if there are 0 misplaced with O. If there were any of these then I simply changed the amount to be 0, which possibly can lead to incorrect data, but we will see past that as this is a learning project. And then simply speaking I went through the lines in from the CSV file and then added them to the respective month - first 5 lines to January, next 4 to February and so on.
+
+After they were added I coded a small output test to see if it is working correctly. The test simply prints out all amounts of incomes or expenses and then calculates the total and prints that out too. I calculated manually and the program worked as expected. 
+
+For me this was quite difficult as it introduced a lot of work with lists and dictionaries which I struggle with as there are a lot of methods which I am not heard of. So this is something I have to improve.
+
+But anyway, it is time for a commit again.
