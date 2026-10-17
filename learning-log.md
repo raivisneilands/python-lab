@@ -96,3 +96,5 @@ And I feel like this is a good time for a commit to `git` repo:
 git add .
 git commit -m "Program can read CSV file from command argument"
 ```
+
+After this I added authentication if it can be called that. Basically it asks user for a password 3 times using a `for` loop and then compares it to the password defined in the `.env` file. For this I needed to install and import a `dotenv` package. And then again time for a commit.
