@@ -39,18 +39,29 @@ if (authenticated):
         month_index = 0
         weeks_added = 0
 
+        rows_success = 0
+        rows_failed = 0
+
         for row in reader:
+            success = True
             if (not row['amount'] or 'O' in row['amount']):
                 row['amount'] = 0
-
+                success = False
+                rows_failed += 1
+            
             month = list(months.keys())[month_index]
             months[month].append(row)
 
             weeks_added += 1
 
+            if (success):
+                rows_success += 1
+
             if weeks_added == weeks_per_month[month_index]:
                 month_index += 1
                 weeks_added = 0
+
+        print(f'Successfully processed rows: {rows_success}\nFailed rows: {rows_failed}')
 
     for month in months:
         print('\n', month, end='.\n')

@@ -108,3 +108,7 @@ After they were added I coded a small output test to see if it is working correc
 For me this was quite difficult as it introduced a lot of work with lists and dictionaries which I struggle with as there are a lot of methods which I am not heard of. So this is something I have to improve.
 
 But anyway, it is time for a commit again.
+
+Next I decided to work on the overview of the processing. To show successfully processed rows - everything was correctly formatted and no data was missing. And also show how many rows failed to process. Currently it checks only the `amount` from the CSV.
+
+I will commit this small change even it is not completely finished. I figure that I will upgrade this as I keep building this project.
