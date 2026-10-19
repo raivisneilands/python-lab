@@ -48,6 +48,8 @@ if (authenticated):
                 row['amount'] = 0
                 success = False
                 rows_failed += 1
+
+            row['amount'] = abs(float(row['amount']))
             
             month = list(months.keys())[month_index]
             months[month].append(row)
@@ -63,17 +65,17 @@ if (authenticated):
 
         print(f'Successfully processed rows: {rows_success}\nFailed rows: {rows_failed}')
 
-    for month in months:
-        print('\n', month, end='.\n')
+        while (True):
+            user_choice = util.display_menu()
 
-        total_sum = 0
-
-        for item in months[month]:
-            print(f'Type: {item['type']}, and amount: {item['amount']}')
-
-            if (item['type'] == 'income'):
-                total_sum += float(item['amount'])
-            else:
-                total_sum -= float(item['amount'])
-
-        print(f'Total amount: {total_sum:.2f}')
+            match(user_choice):
+                case '1':
+                    yearly_amount = util.calculate_total(months)
+                    print(f'Total amount for all year: {yearly_amount}', end='\n')
+                case '2':
+                    print('Monthly overview:', end='\n')
+                    util.print_monthly_view(months)
+                case '3':
+                    break
+                case _:
+                    print('Invalid choice. Enter a number shown from the menu.')
