@@ -76,6 +76,9 @@ if (authenticated):
                     print('Monthly overview:', end='\n')
                     util.print_monthly_view(months)
                 case '3':
+                    print('Weekly overview:', end='\n')
+                    util.print_weekly_view(months)
+                case '4':
                     break
                 case _:
                     print('Invalid choice. Enter a number shown from the menu.')

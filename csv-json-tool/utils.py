@@ -14,6 +14,20 @@ def authenticate():
 
     return 0
 
+def print_weekly_view(months):
+    for month in months:
+        print()
+        print(month, end='.\n')
+
+        print('Week \t Type \t Amount \t Category')
+
+        for item in months[month]:
+            if (not item['type']):
+                continue
+
+            print(f'{item['week']} \t {item['type'].capitalize()[:3]} \t {str(item['amount']) + '    '} \t {item['category']}')
+
+
 def print_monthly_view(months):
     for month in months:
         print()
@@ -54,7 +68,8 @@ def display_menu():
     menu = """
         1 - Calculate total for the year
         2 - Show monthly overview
-        3 - Exit
+        3 - Show weekly overview
+        4 - Exit
     """
 
     print(menu)

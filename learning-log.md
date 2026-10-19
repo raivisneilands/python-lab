@@ -124,3 +124,9 @@ Now that the program has multiple functionalities, I decided to build the menu t
 Also the file itself has more fields like category, payment_method and description, but I haven't figured out if I am going to be using those. Maybe I will use categories field which could show money spent or earned by category. But this will be for a later time to decide.
 
 As for now I will make a commit to repository.
+
+Next up which was quite easy was the weekly view. Since in the file each row already was meant a week, then I simply printed out each row. But I added a month name too for better reading. I also decided to display the week number, type, amount and category since it was already there.
+
+And for user to be able to access this feature, I added it to the menu.
+
+Now it is time for another commit.
