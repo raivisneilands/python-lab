@@ -69,10 +69,42 @@ def display_menu():
         1 - Calculate total for the year
         2 - Show monthly overview
         3 - Show weekly overview
-        4 - Exit
+        4 - Show user defined period
+        5 - Exit
     """
 
     print(menu)
     user_choice = input()
 
     return user_choice
+
+def calculate_from_user_defined_period(months):
+    print('Please enter the starting week: ', end='')
+    starting_week = int(input())
+    print('Please enter the ending week: ', end='')
+    ending_week = int(input())
+
+    if (ending_week < starting_week):
+        print('Starting week must be earlier than ending week')
+        return
+
+    total_sum = 0
+
+    print('Week \t Type \t Amount \t Category')
+
+    for month in months:
+        for item in months[month]:
+            if (not item['type']):
+                continue
+
+            if (item['week'] < starting_week or item['week'] > ending_week):
+                continue
+
+            if (item['type'].strip().lower() == 'income'):
+                total_sum += float(item['amount'])
+            else:
+                total_sum -= float(item['amount'])
+
+            print(f'{item['week']} \t {item['type'].capitalize()[:3]} \t {str(item['amount']) + '    '} \t {item['category']}')    
+
+    print(f'\n Total amount for the defined period: {total_sum}')

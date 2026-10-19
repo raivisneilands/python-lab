@@ -49,6 +49,7 @@ if (authenticated):
                 success = False
                 rows_failed += 1
 
+            row['week'] = int(row['week'])
             row['amount'] = abs(float(row['amount']))
             
             month = list(months.keys())[month_index]
@@ -79,6 +80,9 @@ if (authenticated):
                     print('Weekly overview:', end='\n')
                     util.print_weekly_view(months)
                 case '4':
+                    print('Statistics for user defined period:', '\n')
+                    util.calculate_from_user_defined_period(months)
+                case '5':
                     break
                 case _:
                     print('Invalid choice. Enter a number shown from the menu.')

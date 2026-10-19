@@ -130,3 +130,9 @@ Next up which was quite easy was the weekly view. Since in the file each row alr
 And for user to be able to access this feature, I added it to the menu.
 
 Now it is time for another commit.
+
+Personally I thought it would take me much longer time to make the last feature - user defined period calculations, but it didn't take me long at all. And I believe that this project is now done. 
+
+I simply asked the user input for starting and the ending period, and then compared the weeks against it and showed only those who were inside the defined period, the rest of the weeks I simply skipped.
+
+And it is commit time again.
