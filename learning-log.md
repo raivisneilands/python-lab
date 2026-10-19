@@ -119,4 +119,8 @@ Most of the function came from the already existing test that I was using before
 
 After the total for the year I decided to change how the monthly overview was shown. Instead of showing data for each week, which I guess sounds more like a weekly overview, I now show total calculated for each month and print it out. It simply sums the weekly amounts taking the type into consideration and then it prints out the type and the total amount.
 
-Now that the program has multiple functionalities, I decided to build the menu to keep the CLI relatively cleaned up. This was done by making a new function `display_menu` which prints out the menu and then asks for user input and then it simply returns that input. And then in the `main.py` file it takes the user input and runs through the `match` statement. Currently it has 3 options - calculate total year amount, print the monthly overview and exit.
+Now that the program has multiple functionalities, I decided to build the menu to keep the CLI relatively cleaned up. This was done by making a new function `display_menu` which prints out the menu and then asks for user input and then it simply returns that input. And then in the `main.py` file it takes the user input and runs through the `match` statement. Currently it has 3 options - calculate total year amount, print the monthly overview and exit. But based on the defined requirements it will have 2 more options - showing the weekly view and calculating the money for user-chosen period.
+
+Also the file itself has more fields like category, payment_method and description, but I haven't figured out if I am going to be using those. Maybe I will use categories field which could show money spent or earned by category. But this will be for a later time to decide.
+
+As for now I will make a commit to repository.
