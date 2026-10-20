@@ -140,3 +140,5 @@ And it is commit time again.
 Since this feature wasn't in the requirements then I created a seperate branch for it in case I couldn't be able to finish it. The feature I am talking about is show finances grouped by category.
 
 But I was able to finish it. I created an empty dictionary with the category as a key and empty list as value. Then I went through the records and checked if the category doesn't exist and if not then added to the dictionary. And then I added all the amounts to the list for the respective category. And finally I looped through the made dictionary and calculated the finances for each category. And for the user to be able to use this feature I added it to the menu. 
+
+After verifying that everything works as it is supposed to work, I can make a commit and then merge the branches.
