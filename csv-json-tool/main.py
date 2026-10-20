@@ -51,6 +51,7 @@ if (authenticated):
 
             row['week'] = int(row['week'])
             row['amount'] = abs(float(row['amount']))
+            row['category'] = row['category'].strip().lower()
             
             month = list(months.keys())[month_index]
             months[month].append(row)
@@ -74,15 +75,18 @@ if (authenticated):
                     yearly_amount = util.calculate_total(months)
                     print(f'Total amount for all year: {yearly_amount}', end='\n')
                 case '2':
-                    print('Monthly overview:', end='\n')
+                    print('Monthly overview:')
                     util.print_monthly_view(months)
                 case '3':
-                    print('Weekly overview:', end='\n')
+                    print('Weekly overview:')
                     util.print_weekly_view(months)
                 case '4':
-                    print('Statistics for user defined period:', '\n')
+                    print('Statistics for user defined period:')
                     util.calculate_from_user_defined_period(months)
                 case '5':
+                    print('Finances grouped by category:')
+                    util.finances_by_category(months)
+                case '6':
                     break
                 case _:
                     print('Invalid choice. Enter a number shown from the menu.')

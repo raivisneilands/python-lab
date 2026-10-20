@@ -66,11 +66,12 @@ def calculate_total(months):
 
 def display_menu():
     menu = """
-        1 - Calculate total for the year
-        2 - Show monthly overview
-        3 - Show weekly overview
-        4 - Show user defined period
-        5 - Exit
+1 - Calculate total for the year
+2 - Show monthly overview
+3 - Show weekly overview
+4 - Show user defined period
+5 - Group finances by category
+6 - Exit
     """
 
     print(menu)
@@ -108,3 +109,23 @@ def calculate_from_user_defined_period(months):
             print(f'{item['week']} \t {item['type'].capitalize()[:3]} \t {str(item['amount']) + '    '} \t {item['category']}')    
 
     print(f'\n Total amount for the defined period: {total_sum}')
+
+def finances_by_category(months):
+    categories = {}
+    for month in months:
+        for item in months[month]:
+            if (item['category'] not in categories):
+                categories[item['category']] = []
+            categories[item['category']].append({'amount': item['amount'], 'type': item['type']})
+
+    print('Category \t Amount')
+    
+    for category in categories:
+        category_sum = 0
+        for item in categories[category]:
+            if item['type'] == 'income':
+                category_sum += item['amount']
+            else:
+                category_sum -= item['amount']
+
+        print(f'{category} {'\t' if len(category) > 7 else '\t\t'} ${category_sum:.2f}')        
