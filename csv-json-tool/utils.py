@@ -1,9 +1,16 @@
 from dotenv import load_dotenv
-import os
+import os, csv, json
 
 load_dotenv()
 
 correct_password = os.getenv('ACCESS_PASSWORD')
+
+months = {
+    'January': [], 'February': [], 'March': [], 'April': [], 'May': [], 'June': [],
+    'July': [], 'August': [], 'September': [], 'October': [], 'November': [], 'December': [],
+}
+
+weeks_per_month = [5, 4, 4, 5, 4, 4, 5, 4, 4, 5, 4, 4]
 
 def authenticate():
     for i in range(3):
@@ -13,6 +20,43 @@ def authenticate():
             return 1
 
     return 0
+
+def prepare_file(file, file_extension):
+    with open(file) as file:
+        if (file_extension == '.json'):
+            reader = json.load(file)
+        elif (file_extension == '.csv'):
+            reader = csv.DictReader(file)
+        
+        month_index = 0
+        weeks_added = 0
+
+        rows_success = 0
+        rows_failed = 0
+
+        for row in reader:
+            success = True
+            if (not row['amount'] or 'O' in row['amount']):
+                row['amount'] = 0
+                success = False
+                rows_failed += 1
+
+            row['week'] = int(row['week'])
+            row['amount'] = abs(float(row['amount']))
+            row['category'] = row['category'].strip().lower()
+            
+            month = list(months.keys())[month_index]
+            months[month].append(row)
+
+            weeks_added += 1
+
+            if (success):
+                rows_success += 1
+
+            if weeks_added == weeks_per_month[month_index]:
+                month_index += 1
+                weeks_added = 0
+    return months
 
 def print_weekly_view(months):
     for month in months:
@@ -108,7 +152,7 @@ def calculate_from_user_defined_period(months):
 
             print(f'{item['week']} \t {item['type'].capitalize()[:3]} \t {str(item['amount']) + '    '} \t {item['category']}')    
 
-    print(f'\n Total amount for the defined period: {total_sum}')
+    print(f'\nTotal amount for the defined period: {total_sum:.2f}')
 
 def finances_by_category(months):
     categories = {}

@@ -142,3 +142,9 @@ Since this feature wasn't in the requirements then I created a seperate branch f
 But I was able to finish it. I created an empty dictionary with the category as a key and empty list as value. Then I went through the records and checked if the category doesn't exist and if not then added to the dictionary. And then I added all the amounts to the list for the respective category. And finally I looped through the made dictionary and calculated the finances for each category. And for the user to be able to use this feature I added it to the menu. 
 
 After verifying that everything works as it is supposed to work, I can make a commit and then merge the branches.
+
+I didn't think it would be that easy, but now this program also supports JSON format. Probably it helped that the format was similar to the CSV, where each row was the same as each object in the JSON format. 
+
+To achieve this I simply moved the already existing code which prepared the CSV file to `utils.py` file and defined a function which takes a file and the file extension as arguments. And then simply loads data based on the extension. And then the logic for preparing the data remained the same for both - CSV and JSON files.
+
+I wanted to do a seperate git branch for this too, but I forgot. But I believe that I will have plenty of opportunities to work with branches, so for now a simple commit to the main branch.
