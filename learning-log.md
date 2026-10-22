@@ -151,6 +151,29 @@ I wanted to do a seperate git branch for this too, but I forgot. But I believe t
 
 And finally I have written the tests for this program. This took some figuring out but in the end I managed to write 5 tests. I realize that there probably is much better way to write the tests I wrote but this was an intro to software testing using pytest and I am glad that I am a bit more familiar with this now.
 
-Also I realized that I haven't added the files I used for this project. Now they should be added to the project.
+Also I realized that I haven't added the files I used for data in this project. Now they should be added to the project.
 
-And with this I can finish this project and this was the final project of the chapter 1 of this roadmap. I can say that I am quite comfortable with python basics and can build simple CLI programs. Of course I could spend more time in this chapter but I feel like these basics will come back to me. After making the last commit for this project I will be moving on to chapter 2.
+And with this I can finish this project and this was the final project of the chapter 1 of this roadmap. I can say that I am quite comfortable with python basics and can build simple CLI programs. Of course I could spend more time in this chapter but I believe that these basics will be used over and over. After making the last commit for this project I will be moving on to chapter 2.
+
+## Chapter 2: APIs, Webhooks & Internet Systems
+
+The theory of this chapter is mostly clear to me. I would have to learn or establish things like API keys, Bearer tokens, OAuth 2.0 and JWT concepts, webhooks, payload validation, signatures, retries, idempotency, pagination, rate limits, API errors, API documentation. These things aren't unfamiliar, but I don't understand them perfectly.
+
+And the project also sounds quite confusing to me. It looks like it should be built by using some kind of web framework, but I don't see the place for web framework in this roadmap.
+
+After consulting with AI, I think I understand know. I will have to simulate the lead by using a JSON file. Then I validate it, clean it, transform it if required and then I save it to a CSV file. And after it has been saved I send a notification, but in this case I will probably just simulate it.
+
+But I just have to figure out how to connect the theoretical things with this project.
+
+I probably won't be needing any of the security tokens for this projects so I will simply study and understand the concepts of that. But maybe I could integrate some sort of check for security - maybe a kind of password which is given when user authenticates, but I am not sure yet.
+
+Here is what I am thinking so far... I will create a JSON file to simulate the lead. Then I will validate it and prepare it for storing. To store this lead I will create a CSV file and append each lead to that. And once the lead is successfuly added to the CSV, a webhook will be triggered which will send the notification, that a new lead has appeared.
+
+But I still have no idea how would I use the signatures, retries, rate limits, API errors/documentation. Maybe I will figure that out as I start building the project.
+
+So here is everything I will learn and use in the project most likely:
+- HTTP requests and responses
+- GET/POST request methods
+- Headers, body, status codes
+- Webhooks, payload validation, retries, idempotency (every identical request produces the same result)
+- API errors and API documentation.
