@@ -106,7 +106,7 @@ def calculate_total(months):
             else:
                 total_year -= float(item['amount'])
 
-    return (f'{total_year:.2f}')
+    return round(total_year, 2)
 
 def display_menu():
     menu = """

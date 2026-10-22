@@ -1,0 +1,53 @@
+week,date,category,amount,type,payment_method,description
+01,2026-01-05,salary,2500.80,income,bank_transfer,Monthly salary
+02,2026-01-12,rent,550.00,expense,bank_transfer,Apartment rent
+03,2026-01-19,groceries,185.40,expense,debit_card,Weekly groceries
+04,2026-01-26,freelance,420.00,income,bank_transfer,Website project
+05,2026-02-02,utilities,125.75,expense,debit_card,Electricity and water
+06,2026-02-09,salary,2500.80,income,bank_transfer,Monthly salary
+07,2026-02-16,transport,65.20,expense,cash,Bus and fuel
+08,2026-02-23,entertainment,89.99,expense,credit_card,Movies and dining
+09,2026-03-02,groceries,210.50,expense,debit_card,Food shopping
+10,2026-03-09,salary,2500.80,income,bank_transfer,Monthly salary
+11,2026-03-16,healthcare,145.00,expense,credit_card,Dental appointment
+12,2026-03-23,freelance,350.00,income,bank_transfer,Design work
+13,2026-03-30,rent,550.00,expense,bank_transfer,Apartment rent
+14,2026-04-06,groceries,195.30,expense,debit_card,Weekly groceries
+15,2026-04-13,salary,2500.80,Income,bank_transfer,Monthly salary
+16,2026-04-20,shopping,275.99,expense,credit_card,New clothing
+17,2026-04-27,utilities,,expense,debit_card,Internet and electricity
+18,2026-05-04,freelance,580.00,income,bank_transfer,Consulting project
+19,2026-05-11,salary,2500.80,income,bank_transfer,Monthly salary
+20,2026-05-18,transport,72.50,expense,cash,Public transport
+21,2026-05-25,groceries,220.10,expense,debit_card,Weekly groceries
+22,2026-06-01,rent,550.00,expense,bank_transfer,Apartment rent
+23,2026-06-08,salary,2500.80,income,bank_transfer,Monthly salary
+24,2026-06-15,entertainment,120.00,expense,credit_card,Concert tickets
+25,2026-06-22,bonus,750.00,income,bank_transfer,Performance bonus
+26,2026-06-29,groceries,180.45,expense,debit_card,Food shopping
+27,2026-07-06,utilities,135.60,expense,debit_card,Monthly bills
+28,2026-07-13,salary,2500.80,income,bank_transfer,Monthly salary
+29,2026-07-20,travel,850.00,expense,credit_card,Summer vacation
+30,2026-07-27,shopping,199.99,expense,debit_card,Electronics
+31,2026-08-03,freelance,460.00,income,bank_transfer,Freelance assignment
+32,2026-08-10,salary,2500.80,income,bank_transfer,Monthly salary
+33,2026-08-17,groceries,2O5.50,expense,debit_card,Weekly groceries
+34,2026-08-24,healthcare,95.00,expense,cash,Medical checkup
+35,2026-08-31,rent,550.00,expense,bank_transfer,Apartment rent
+36,2026-09-07,salary,2500.80,income,bank_transfer,Monthly salary
+37,2026-09-14,transport,-85.00,expense,debit_card,Vehicle maintenance
+38,2026-09-21,entertainment,110.25,expense,credit_card,Weekend activities
+39,2026-09-28,groceries,230.75,expense,debit_card,Food shopping
+40,2026-10-05,freelance,620.00,income,bank_transfer,Development project
+41,2026-10-12,salary,2500.80,income,bank_transfer,Monthly salary
+42,19/10/2026,utilities,145.20,expense,debit_card,Monthly utilities
+43,2026-10-26,shopping,320.00,expense,credit_card,Home supplies
+44,2026-11-02,groceries,215.40,expense,debit_card,Weekly groceries
+45,2026-11-09,salary,2500.80,income,bank_transfer,Monthly salary
+46,2026-11-16,rent,550.00,expence,bank_transfer,Apartment rent
+47,2026-11-23,freelance,390.00,income,bank_transfer,Translation work
+48,2026-11-30,Groceries,240.80,expense,debit_card,Monthly food shopping
+49,2026-12-07,salary,2500.80,income,bank_transfer,Monthly salary
+50,2026-12-14,shopping,450.00,expense,credit_card,Holiday gifts
+51,2026-12-21,bonus,1200.00,income,bank_transfer,Year-end bonus
+52,2026-12-28,travel,675.50,,credit_card,Holiday trip

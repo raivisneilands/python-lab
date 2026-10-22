@@ -148,3 +148,9 @@ I didn't think it would be that easy, but now this program also supports JSON fo
 To achieve this I simply moved the already existing code which prepared the CSV file to `utils.py` file and defined a function which takes a file and the file extension as arguments. And then simply loads data based on the extension. And then the logic for preparing the data remained the same for both - CSV and JSON files.
 
 I wanted to do a seperate git branch for this too, but I forgot. But I believe that I will have plenty of opportunities to work with branches, so for now a simple commit to the main branch.
+
+And finally I have written the tests for this program. This took some figuring out but in the end I managed to write 5 tests. I realize that there probably is much better way to write the tests I wrote but this was an intro to software testing using pytest and I am glad that I am a bit more familiar with this now.
+
+Also I realized that I haven't added the files I used for this project. Now they should be added to the project.
+
+And with this I can finish this project and this was the final project of the chapter 1 of this roadmap. I can say that I am quite comfortable with python basics and can build simple CLI programs. Of course I could spend more time in this chapter but I feel like these basics will come back to me. After making the last commit for this project I will be moving on to chapter 2.
