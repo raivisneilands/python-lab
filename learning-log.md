@@ -177,3 +177,19 @@ So here is everything I will learn and use in the project most likely:
 - Headers, body, status codes
 - Webhooks, payload validation, retries, idempotency (every identical request produces the same result)
 - API errors and API documentation.
+
+### Project: Business Lead Intake System
+
+It is time to start building again. To start, I simply made 3 lead JSON files, example:
+```json
+ {
+  "name": "Alex Johnson",
+  "email": "alex@example.com",
+  "company": "Johnson Plumbing",
+  "service": "Website automation",
+  "message": "I want to automate customer inquiries."
+}
+```
+Then I read from this JSON file and create, if it doesn't exist already, a CSV file where all leads will be stored, and store the data inside the CSV file. This will be the base code which will be upgraded into a fully working system.
+
+I just wanted to code a small version which I know works correctly.
