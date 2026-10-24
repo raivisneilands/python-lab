@@ -193,3 +193,7 @@ It is time to start building again. To start, I simply made 3 lead JSON files, e
 Then I read from this JSON file and create, if it doesn't exist already, a CSV file where all leads will be stored, and store the data inside the CSV file. This will be the base code which will be upgraded into a fully working system.
 
 I just wanted to code a small version which I know works correctly.
+
+Small update: I added a `validator.py` which will validate the JSON file before writing it to the CSV file. Later on this validator most likely will also validate the webhook before sending it.
+
+And then I created an invalid lead file `lead-invalid.json` where I tried all possibilites where the validation should fail and it worked successfully.
