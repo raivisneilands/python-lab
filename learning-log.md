@@ -197,3 +197,9 @@ I just wanted to code a small version which I know works correctly.
 Small update: I added a `validator.py` which will validate the JSON file before writing it to the CSV file. Later on this validator most likely will also validate the webhook before sending it.
 
 And then I created an invalid lead file `lead-invalid.json` where I tried all possibilites where the validation should fail and it worked successfully.
+
+Now I have worked on the webhook and I believe that it is working properly now. The tought at first was to create a new web server using python and then handle the request using probably something like FastAPI, but that will be learned at a later chapter, so I used already existing Laravel projects I had and defined a new route there.
+
+For the webhook I created a new file `webhook.py` and in there a function `trigger_webhook` which tells the user that the webhook has been triggered and then it sends a post request to the Laravel project and it also sends over the data - event, which in this case it is `lead.created` and also the lead itself. This function gets called right after adding the lead to the leads CSV file.
+
+And probably this will be it for the webhook. I just wanted to see and understand how the webhook worked and I think that I do now. Of course this webhook doesn't do anything useful, but the idea is that it can do something like sending the notification, but I didn't want to do that using Laravel, that is why I am calling this done.

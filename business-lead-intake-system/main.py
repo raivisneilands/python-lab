@@ -1,4 +1,4 @@
-import sys, json, csv, os, validator
+import sys, json, csv, os, validator, webhook
 
 try:
     file = sys.argv[1]
@@ -26,3 +26,5 @@ else:
             writer.writeheader()
         
         writer.writerow(reader)
+
+    webhook.trigger_webhook('lead.created', reader)
