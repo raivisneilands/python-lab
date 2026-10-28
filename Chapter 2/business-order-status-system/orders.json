@@ -1,1 +1,33 @@
-[{"id": 1, "customer": "John Doe", "product": "Laptop", "status": "cancelled"}, {"id": 2, "customer": "Alex Johnson", "product": "Monitor", "status": "delivered"}, {"id": 3, "customer": "Tyler Smith", "product": "GPU", "status": "shipped"}, {"id": 4, "customer": "Anna Oakland", "product": "Printer", "status": "delivered"}, {"id": 5, "customer": "Ryan Smitherson", "product": "PC case", "status": "processing"}, {"id": 6, "customer": "Sabrina Oaker", "product": "Monitor", "status": "cancelled"}]
+[
+  {
+    "id": 1,
+    "customer": "John Doe",
+    "product": "Laptop",
+    "status": "processing"
+  },
+  {
+    "id": 2,
+    "customer": "Alex Johnson",
+    "product": "Monitor",
+    "status": "delivered"
+  },
+  { "id": 3, "customer": "Tyler Smith", "product": "GPU", "status": "shipped" },
+  {
+    "id": 4,
+    "customer": "Anna Oakland",
+    "product": "Printer",
+    "status": "delivered"
+  },
+  {
+    "id": 5,
+    "customer": "Ryan Smitherson",
+    "product": "PC case",
+    "status": "processing"
+  },
+  {
+    "id": 6,
+    "customer": "Sabrina Oaker",
+    "product": "Monitor",
+    "status": "cancelled"
+  }
+]

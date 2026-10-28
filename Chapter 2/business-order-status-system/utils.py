@@ -9,6 +9,11 @@ def read_orders(file):
     
     with open(file) as orders:
         reader = json.load(orders)
+
+    for item in reader:
+        for key in item.keys():
+            if(not item[key]):
+                return {'success': False, 'message': f'Value is missing for key: {key}. Order ID: {item['id']}'}
     
     return {'success': True, 'data': reader}
 
@@ -18,30 +23,57 @@ def show_orders(orders):
         print(f'{order['id']}\t{order['customer']}\t{order['product']}\t\t{order['status']}')
 
 def select_order(orders):
-    print('Select order ID: ', end='')
-    order_id = int(input()) - 1
+    try:
+        print('Select order ID: ', end='')
+        order_id = int(input()) - 1
+        return orders[order_id]
+    except ValueError:
+        print('ID must be an integer.')
+        return None
+    except IndexError:
+        print('Entered ID was not found in the available orders.')
+        return None
 
-    return orders[order_id]
 
 def change_order_status(order):
-    print('Select the new status from the list:')
-    print('1 - Processing\n2 - Shipped\n3 - Delivered\n4 - Cancelled')
-    new_status = int(input())
+    try:
+        print('Select the new status from the list:')
+        print('1 - Processing\n2 - Shipped\n3 - Delivered\n4 - Cancelled')
+        new_status = int(input())
 
-    match new_status:
-        case 1:
-            status = 'processing'
-        case 2:
-            status = 'shipped'
-        case 3:
-            status = 'delivered'
-        case 4:
-            status = 'cancelled'
-        case _:
-            'Invalid choice. Please try again.'
+        match new_status:
+            case 1:
+                status = 'processing'
+            case 2:
+                status = 'shipped'
+            case 3:
+                status = 'delivered'
+            case 4:
+                status = 'cancelled'
+            case _:
+                print('Invalid status choice.')
+                status = None
 
-    order['status'] = status
+        if (not status):
+            print('Failed to change status.')
+            return None
+
+        if (order['status'] == status):
+            return {'success': True, 'changed': False, 'message': f'Status was already {status}. No need for order file update.'}
+
+        order['status'] = status
+        return {'success': True, 'changed': True, 'message': 'Status updated successfully.'}
+
+    except ValueError:
+        print('You must enter an integer.')
+        return None
 
 def update_orders_file(file, orders):
-    with open(file, 'w') as order_file:
-        json.dump(orders, order_file)
+    try:
+        with open(file, 'w') as order_file:
+            json.dump(orders, order_file)
+    except Exception:
+        return {'success': False, 'message': 'Failed to update the order file.'}
+    
+    return {'success': True, 'message': 'Order file updated successfully.'}
+    
