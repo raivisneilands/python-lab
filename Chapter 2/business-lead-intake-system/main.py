@@ -15,7 +15,7 @@ if (validated[0] == False):
     print(f'Failed to validate the lead. Reason: {validated[1]}')
     sys.exit(1)
 else:
-    lead_file_path = 'business-lead-intake-system\\leads\\leads.csv'
+    lead_file_path = 'Chapter 2\\business-lead-intake-system\\leads\\leads.csv'
     file_exists = os.path.exists(lead_file_path)
 
     with open(lead_file_path, 'a', newline='') as leads_file:
