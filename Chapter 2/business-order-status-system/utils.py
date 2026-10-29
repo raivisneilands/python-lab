@@ -25,21 +25,25 @@ def show_orders(orders):
 def select_order(orders):
     try:
         print('Select order ID: ', end='')
-        order_id = int(input()) - 1
-        return orders[order_id]
+        order_id = int(input())
+
+        for order in orders:
+            if (order['id'] == order_id):
+                return order
+
+        print('Order not found.')
+        return None
+
     except ValueError:
         print('ID must be an integer.')
         return None
-    except IndexError:
-        print('Entered ID was not found in the available orders.')
-        return None
-
 
 def change_order_status(order):
     try:
         print('Select the new status from the list:')
         print('1 - Processing\n2 - Shipped\n3 - Delivered\n4 - Cancelled')
         new_status = int(input())
+        old_status = order['status']
 
         match new_status:
             case 1:
@@ -58,11 +62,11 @@ def change_order_status(order):
             print('Failed to change status.')
             return None
 
-        if (order['status'] == status):
+        if (old_status == status):
             return {'success': True, 'changed': False, 'message': f'Status was already {status}. No need for order file update.'}
 
         order['status'] = status
-        return {'success': True, 'changed': True, 'message': 'Status updated successfully.'}
+        return {'success': True, 'changed': True, 'message': 'Status updated successfully.', 'prev_status': old_status}
 
     except ValueError:
         print('You must enter an integer.')

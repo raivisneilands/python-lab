@@ -1,4 +1,4 @@
-import sys, utils
+import sys, utils, webhook
 
 def main():
     try:
@@ -34,9 +34,16 @@ def main():
 
     print(status_change['message'])
 
+    if (status_change['changed'] == False):
+        print('The status has not been changed.')
+        sys.exit(0)
+
     if (status_change['changed'] == True):
         file_update = utils.update_orders_file(order_file, data)
         print(file_update['message'])
+
+    if (file_update['success'] == True and status_change['changed'] == True):
+        webhook.trigger_webhook(order, status_change['prev_status'])
 
 if __name__ == '__main__':
     main()
