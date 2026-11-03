@@ -1,14 +1,28 @@
 import database as db
+import menu
+import lead
 
 def main():
-    db_conn = db.db_connect()
+    db_conn = db.connect()
 
-    db_conn.execute('SELECT version();')
-    records = db_conn.fetchall()
+    connection = db_conn[0]
+    cursor = db_conn[1]
 
-    print(records)
+    while (True):
+        user_input = menu.display()
 
-    db_conn.close()
+        match user_input:
+            case 1: 
+                lead.view_all(cursor)
+            case 2: 
+                lead.create(cursor)
+                connection.commit()
+            case 5: # Exit
+                break
+            case _:
+                print('Invalid choice. Please try again.')
+
+    db.disconnect(connection, cursor)
 
 if __name__ == '__main__':
     main()

@@ -254,3 +254,9 @@ and it returned:
 [('PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit',)]
 ``` 
 so I can verify that the connection indeed was successful.
+
+I have implemented 2 features - you can get all leads from the database, and you can create a new lead.
+
+I have created a `menu.py` file which prints out the menu and gets user input from it and returns it. Also I created a `leads.py` file where all the CRUD operations will live as a separate functions. 
+
+Also I read that I should close the cursor and database connection when I stop working with it so I added a `disconnect(connection, cursor)` function which does exactly that - closes the cursor and the database connection.
