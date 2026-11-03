@@ -260,3 +260,5 @@ I have implemented 2 features - you can get all leads from the database, and you
 I have created a `menu.py` file which prints out the menu and gets user input from it and returns it. Also I created a `leads.py` file where all the CRUD operations will live as a separate functions. 
 
 Also I read that I should close the cursor and database connection when I stop working with it so I added a `disconnect(connection, cursor)` function which does exactly that - closes the cursor and the database connection.
+
+After some work I have added update and delete functionalities as well. Now the program has available all CRUD operations. For now this is the base we will work on. I want to implement features like sorting by id or date (for this I would need time as well as it is not showing currently), search function that allows to search by lead name, customer name. These features most likely will be added on the next commits. And also I need to think about the error handling which I have not implemented, e.g. database connection failure, query failure, etc.

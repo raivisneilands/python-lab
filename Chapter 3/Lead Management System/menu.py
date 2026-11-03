@@ -1,15 +1,14 @@
 def display():
     menu = """
-        1 - View leads
-        2 - Add a lead
-        3 - Update a lead (COMING SOON)
-        4 - Delete a lead (COMING SOON)
-        5 - Exit
-        Your choice: 
-        """
+1 - View leads
+2 - Add a lead
+3 - Update a lead
+4 - Delete a lead
+5 - Exit
+    """
 
-    print(menu, end='')
-    select = int(input())
+    print(menu)
+    select = int(input('Your choice: '))
 
     if (select > 5 or select < 1):
         return False

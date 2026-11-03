@@ -17,6 +17,11 @@ def main():
             case 2: 
                 lead.create(cursor)
                 connection.commit()
+            case 3:
+                lead.update(cursor)
+                connection.commit()
+            case 4:
+                lead.delete(cursor, connection)
             case 5: # Exit
                 break
             case _:
