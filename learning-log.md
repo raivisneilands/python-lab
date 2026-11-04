@@ -262,3 +262,13 @@ I have created a `menu.py` file which prints out the menu and gets user input fr
 Also I read that I should close the cursor and database connection when I stop working with it so I added a `disconnect(connection, cursor)` function which does exactly that - closes the cursor and the database connection.
 
 After some work I have added update and delete functionalities as well. Now the program has available all CRUD operations. For now this is the base we will work on. I want to implement features like sorting by id or date (for this I would need time as well as it is not showing currently), search function that allows to search by lead name, customer name. These features most likely will be added on the next commits. And also I need to think about the error handling which I have not implemented, e.g. database connection failure, query failure, etc.
+
+I have added the sorting functionality. You can sort by all fields in ascending or descending order. This wasn't as easy as it sounds, because first I tried to parameterize queries like so:
+```python
+cursor.execute(query, (parameters))
+```
+but this didn't work because in the parameters were defined strings with the quotes and quotes were inserted in the query too and that broke the query. So the solution was to use the `sql` module from `psycopg2`. I created the query in a variable with following structure:
+```sql
+query = sql.SQL('query {} {}').format(parameters)
+```
+This way I define where the parameters should go and then I provide the parameters themselves. And I guess the format() removes the quotes, because this way it worked successfully.

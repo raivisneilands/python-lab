@@ -22,7 +22,9 @@ def main():
                 connection.commit()
             case 4:
                 lead.delete(cursor, connection)
-            case 5: # Exit
+            case 5:
+                lead.view_sorted(cursor)
+            case 6: # Exit
                 break
             case _:
                 print('Invalid choice. Please try again.')
