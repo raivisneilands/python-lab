@@ -1,5 +1,20 @@
 import datetime
+import psycopg2
 from psycopg2 import sql
+
+def print_columns(cursor):
+    cursor.execute("""
+        SELECT * FROM leads LIMIT 0;
+    """)
+
+    column_names = [desc[0] for desc in cursor.description]
+
+    print('ID\tField')
+
+    for item in column_names:
+        print(column_names.index(item) + 1, f'\t{item}')
+
+    return column_names
 
 def view_all(cursor):
     cursor.execute("""
@@ -83,16 +98,7 @@ def delete(cursor, connection):
             print('Invalid choice, please try again.')
 
 def view_sorted(cursor):
-    cursor.execute("""
-        SELECT * FROM leads LIMIT 0;
-    """)
-
-    column_names = [desc[0] for desc in cursor.description]
-
-    print('ID\tField')
-
-    for item in column_names:
-        print(column_names.index(item) + 1, f'\t{item}')
+    column_names = print_columns(cursor)
 
     field = int(input('By which field you wish to sort? Enter the ID of the field: ')) - 1
     sort_method = input('Do you wish to sort in Ascending or Descending order? (a/d): ')
@@ -100,16 +106,58 @@ def view_sorted(cursor):
     sort_column = column_names[field]
     direction = 'ASC' if sort_method.lower() == 'a' else 'DESC'
 
-    query = sql.SQL("SELECT * FROM leads ORDER BY {} {}").format(
-        sql.Identifier(sort_column),
-        sql.SQL(direction)
+    query = sql.SQL("SELECT * FROM leads ORDER BY {} %s").format(
+        sql.Identifier(sort_column)
     )
 
-    cursor.execute(query)
+    cursor.execute(query, (direction,))
 
     leads = cursor.fetchall()
 
     # can't call view_all() as it prints out the leads unsorted. This prints out the sorted way.
     print('\nID\tLead Name\tCustomer Name\tDate')
     for lead in leads:
+        print(f'{lead[0]}\t{lead[1]}\t\t{lead[2]}\t{lead[3]}')
+
+def search(cursor):
+    column_names = print_columns(cursor)
+
+    field = int(input('By which field you wish to search, enter the ID: ')) - 1
+
+    if (field != 3):
+        search_query = input('Search query: ')
+
+    search_column = column_names[field]
+
+    if (field == 0):
+        query = sql.SQL("SELECT * FROM leads" \
+        " WHERE {} = %s").format(
+            sql.Identifier(search_column)
+        )
+    elif (field == 3):
+        search_query = input('Enter the date to search for (YYYY-MM-DD): ')
+        query = sql.SQL("SELECT * FROM leads" \
+        " WHERE {} = %s").format(
+            sql.Identifier(search_column),
+        )
+    else:
+        query = sql.SQL("SELECT * FROM leads" \
+        " WHERE {} LIKE %s").format(
+            sql.Identifier(search_column),
+        )
+        search_query = '%' + search_query + '%'
+    try:
+        cursor.execute(query, (search_query,))
+    except psycopg2.errors.InvalidDatetimeFormat:
+        print('Invalid format. Please input following this format (YYYY-MM-DD).')
+        return
+    
+    results = cursor.fetchall()
+
+    if (not results):
+        print('No matching results were found.')
+        return
+
+    print('\nID\tLead Name\tCustomer Name\tDate')
+    for lead in results:
         print(f'{lead[0]}\t{lead[1]}\t\t{lead[2]}\t{lead[3]}')

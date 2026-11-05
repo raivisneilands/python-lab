@@ -272,3 +272,10 @@ but this didn't work because in the parameters were defined strings with the quo
 query = sql.SQL('query {} {}').format(parameters)
 ```
 This way I define where the parameters should go and then I provide the parameters themselves. And I guess the format() removes the quotes, because this way it worked successfully.
+
+It turns out that the example above is not safe and vulnerable to SQL injections so that had to change, because `sql.SQL(query)` doesn't do any type of validation or escaping. I had to basically combine both examples to something like this:
+```sql
+query = sql.SQL('query {} %s').format(parameters) -- pass safely handled identifiers
+cursor.execute(query, (parameters)) -- pass the untrusted values here
+```
+I changed the `view_sorted()` function and considered this when I created the `search()` function, which I successfully created and took some time because the search query was different for the ID and the date fields. I decided to use the if..elif..else statement to check which field was selected and then the query gets built accordingly.

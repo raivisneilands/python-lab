@@ -5,7 +5,8 @@ def display():
 3 - Update a lead
 4 - Delete a lead
 5 - View leads in sorted order
-6 - Exit
+6 - Search leads
+7 - Exit
     """
 
     print(menu)

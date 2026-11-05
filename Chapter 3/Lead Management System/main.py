@@ -24,7 +24,9 @@ def main():
                 lead.delete(cursor, connection)
             case 5:
                 lead.view_sorted(cursor)
-            case 6: # Exit
+            case 6:
+                lead.search(cursor)
+            case 7: # Exit
                 break
             case _:
                 print('Invalid choice. Please try again.')
