@@ -5,8 +5,12 @@ import lead
 def main():
     db_conn = db.connect()
 
-    connection = db_conn[0]
-    cursor = db_conn[1]
+    if (db_conn):
+        connection = db_conn[0]
+        cursor = db_conn[1]
+    else:
+        print('No connection was made to database. Exiting.')
+        return
 
     while (True):
         user_input = menu.display()

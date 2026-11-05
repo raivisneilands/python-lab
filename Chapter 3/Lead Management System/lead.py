@@ -53,6 +53,10 @@ def update(cursor):
     """, (lead_id,))
 
     selected_lead = cursor.fetchone()
+    if not (selected_lead):
+        print('Failed to find the lead. Returning.')
+        return
+    
     print(f'You have selected this lead!\n {selected_lead}')
     
     lead_name = input('Please enter the lead name (leave empty to not change): ')
@@ -79,6 +83,10 @@ def delete(cursor, connection):
     """, (lead_id,))
 
     selected_lead = cursor.fetchone()
+
+    if not (selected_lead):
+        print('Failed to find the lead. Returning.')
+        return
     
     while (confirmation.lower() != 'y' or confirmation.lower() != 'n'):
         confirmation = input(f'Are you sure you wish to delete this lead (y/n)?\n{selected_lead}: ')
@@ -100,10 +108,20 @@ def delete(cursor, connection):
 def view_sorted(cursor):
     column_names = print_columns(cursor)
 
-    field = int(input('By which field you wish to sort? Enter the ID of the field: ')) - 1
+    try:
+        field = int(input('By which field you wish to sort? Enter the ID of the field: ')) - 1
+    except ValueError as e:
+        print(f'Invalid value type. {e}. Returning.')
+        return
+    
+    try: 
+        sort_column = column_names[field]
+    except IndexError as e:
+        print(f'The lead with entered index was not found! {e}. Returning.')
+        return
+
     sort_method = input('Do you wish to sort in Ascending or Descending order? (a/d): ')
 
-    sort_column = column_names[field]
     direction = 'ASC' if sort_method.lower() == 'a' else 'DESC'
 
     query = sql.SQL("SELECT * FROM leads ORDER BY {} %s").format(
@@ -113,6 +131,10 @@ def view_sorted(cursor):
     cursor.execute(query, (direction,))
 
     leads = cursor.fetchall()
+
+    if (not leads):
+        print('No leads were found. Returning.')
+        return
 
     # can't call view_all() as it prints out the leads unsorted. This prints out the sorted way.
     print('\nID\tLead Name\tCustomer Name\tDate')

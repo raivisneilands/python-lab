@@ -279,3 +279,7 @@ query = sql.SQL('query {} %s').format(parameters) -- pass safely handled identif
 cursor.execute(query, (parameters)) -- pass the untrusted values here
 ```
 I changed the `view_sorted()` function and considered this when I created the `search()` function, which I successfully created and took some time because the search query was different for the ID and the date fields. I decided to use the if..elif..else statement to check which field was selected and then the query gets built accordingly.
+
+I have added error handling for this project. It handles database connection failure, correct value types should be entered in the menu, handles failed attempts to find non-existing attempt, if something is not found, then the program does not crash. And with this the project should be complete more or less. Of course there are many ways this project could be better, but for learning experience I think it is enough as I learned how to work with database using python.
+
+I will now commit this and then do a code review with AI.

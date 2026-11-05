@@ -10,6 +10,9 @@ def display():
     """
 
     print(menu)
-    select = int(input('Your choice: '))
-
-    return select
+    try:
+        select = int(input('Your choice: '))
+        return select
+    except ValueError as e:
+        print(f'Invalid input: {e}. Please enter a valid integer.')
+        return
