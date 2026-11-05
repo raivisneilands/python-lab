@@ -283,3 +283,10 @@ I changed the `view_sorted()` function and considered this when I created the `s
 I have added error handling for this project. It handles database connection failure, correct value types should be entered in the menu, handles failed attempts to find non-existing attempt, if something is not found, then the program does not crash. And with this the project should be complete more or less. Of course there are many ways this project could be better, but for learning experience I think it is enough as I learned how to work with database using python.
 
 I will now commit this and then do a code review with AI.
+
+AI found some issues and bugs in my code. The issues found and fixed:
+- Database connection string was printed out to terminal. Credentials were not validated. Switched to keyword credentials instead of string. Add error handling for database connection failures.
+- Added validation for empty fields when creating leads. Prevented the application from inserting incomplete records. Added validation for user-provided lead IDs. Checked whether a lead exists before updating or deleting it. Added confirmation before deleting a record. Improved error handling around INSERT, UPDATE, DELETE and SELECT operations.
+- SQL injection prevention
+- removed redundant try..except blocks.
+- proper transaction handling.

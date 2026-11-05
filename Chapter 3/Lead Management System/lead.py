@@ -11,14 +11,15 @@ def print_columns(cursor):
 
     print('ID\tField')
 
-    for item in column_names:
-        print(column_names.index(item) + 1, f'\t{item}')
+    for index, item in enumerate(column_names, start=1):
+        print(index, f'\t{item}')
 
     return column_names
 
 def view_all(cursor):
     cursor.execute("""
-        SELECT * FROM leads;
+        SELECT * FROM leads
+        ORDER by id DESC;
     """)
 
     leads = cursor.fetchall()
@@ -36,23 +37,51 @@ def create(cursor):
     customer_name = input('Please enter the customer name: ')
     date = datetime.datetime.now()
 
-    cursor.execute("""
-        INSERT INTO leads (lead_name, customer_name, date)
-        VALUES
-        (%s, %s, %s)
-    """, (lead_name, customer_name, date))
+    values = {'lead': lead_name, 'customer': customer_name}
+    missing_values = []
+
+    for value in values:
+        if (not values[value]):
+            missing_values.append(value)
+
+    if (len(missing_values) > 0):
+        print('Following values are missing: ')
+        for value in missing_values:
+            print(value)
+        return
+
+    try:
+        cursor.execute("""
+            INSERT INTO leads (lead_name, customer_name, date)
+            VALUES
+            (%s, %s, %s)
+        """, (lead_name, customer_name, date))
+
+        return True
+    except psycopg2.Error:
+        print('Something went wrong when trying to create a lead. Rolling back changes.')
+        return False
 
 def update(cursor):
     view_all(cursor)
 
-    lead_id = int(input('Please select the ID of the lead you wish to update: '))
-    
-    cursor.execute("""
-        SELECT * FROM leads
-        WHERE id = %s;
-    """, (lead_id,))
+    try:
+        lead_id = int(input('Please select the ID of the lead you wish to update: '))
+    except ValueError:
+        print('Please enter a valid integer.')
+        return
+
+    try:
+        cursor.execute("""
+            SELECT * FROM leads
+            WHERE id = %s;
+        """, (lead_id,))
+    except psycopg2.Error:
+        print('Failed to get the lead...')
+        return False
 
     selected_lead = cursor.fetchone()
+    
     if not (selected_lead):
         print('Failed to find the lead. Returning.')
         return
@@ -65,41 +94,57 @@ def update(cursor):
     customer_name = selected_lead[2] if len(customer_name) == 0 else customer_name
     date = datetime.datetime.now()
 
-    cursor.execute("""
-        UPDATE leads
-        SET lead_name = %s, customer_name = %s, date = %s
-        WHERE id = %s
-    """, (lead_name, customer_name, date, lead_id))
+    try:
+        cursor.execute("""
+            UPDATE leads
+            SET lead_name = %s, customer_name = %s, date = %s
+            WHERE id = %s
+        """, (lead_name, customer_name, date, lead_id))
+        return True
+    except psycopg2.Error:
+        print('Something went wrong when trying to update. Rolling back the changes.')
+        return False
 
-def delete(cursor, connection):
+def delete(cursor):
     view_all(cursor)
 
     confirmation = ''
 
-    lead_id = int(input('Please select the ID of the lead you wish to delete: '))
-    cursor.execute("""
-        SELECT * FROM leads
-        WHERE id = %s;
-    """, (lead_id,))
+    try:
+        lead_id = int(input('Please select the ID of the lead you wish to delete: '))
+    except ValueError:
+        print('Please enter a valid integer.')
+        return
+
+    try:
+        cursor.execute("""
+            SELECT * FROM leads
+            WHERE id = %s;
+        """, (lead_id,))
+    except psycopg2.Error:
+        print('Something went wrong...')
+        return False
 
     selected_lead = cursor.fetchone()
 
     if not (selected_lead):
         print('Failed to find the lead. Returning.')
-        return
+        return False
     
-    while (confirmation.lower() != 'y' or confirmation.lower() != 'n'):
+    while (confirmation.lower() not in ('y', 'n')):
         confirmation = input(f'Are you sure you wish to delete this lead (y/n)?\n{selected_lead}: ')
 
         if (confirmation.lower() == 'y'):
-            cursor.execute("""
-                DELETE FROM leads
-                WHERE id = %s;
-            """, (lead_id,))
-            connection.commit()
-            return
+            try:
+                cursor.execute("""
+                    DELETE FROM leads
+                    WHERE id = %s;
+                """, (lead_id,))
+                return True
+            except psycopg2.Error:
+                print('Something went wrong. Rolling back made changes...')
+                return False
         elif (confirmation.lower() == 'n'):
-            cursor.close()
             print('Returning...')
             return
         else:
@@ -113,22 +158,31 @@ def view_sorted(cursor):
     except ValueError as e:
         print(f'Invalid value type. {e}. Returning.')
         return
-    
-    try: 
-        sort_column = column_names[field]
-    except IndexError as e:
-        print(f'The lead with entered index was not found! {e}. Returning.')
+
+    if field < 0 or field >= len(column_names):
+        print('Invalid field ID.')
         return
+    
+    sort_column = column_names[field]
 
     sort_method = input('Do you wish to sort in Ascending or Descending order? (a/d): ')
 
+    if (sort_method.lower() not in ('a', 'd')):
+        print('Invalid sorting method')
+        return
+
     direction = 'ASC' if sort_method.lower() == 'a' else 'DESC'
 
-    query = sql.SQL("SELECT * FROM leads ORDER BY {} %s").format(
-        sql.Identifier(sort_column)
+    query = sql.SQL("SELECT * FROM leads ORDER BY {} {}").format(
+        sql.Identifier(sort_column),
+        sql.SQL(direction)
     )
 
-    cursor.execute(query, (direction,))
+    try:
+        cursor.execute(query)
+    except psycopg2.Error:
+        print('Something went wrong')
+        return False
 
     leads = cursor.fetchall()
 
@@ -144,8 +198,16 @@ def view_sorted(cursor):
 def search(cursor):
     column_names = print_columns(cursor)
 
-    field = int(input('By which field you wish to search, enter the ID: ')) - 1
+    try:
+        field = int(input('By which field you wish to search, enter the ID: ')) - 1
+    except ValueError:
+        print('Invalid data type. Please enter a valid integer.')
+        return
 
+    if field < 0 or field >= len(column_names):
+        print('Invalid field ID.')
+        return
+    
     if (field != 3):
         search_query = input('Search query: ')
 
@@ -159,7 +221,7 @@ def search(cursor):
     elif (field == 3):
         search_query = input('Enter the date to search for (YYYY-MM-DD): ')
         query = sql.SQL("SELECT * FROM leads" \
-        " WHERE {} = %s").format(
+        " WHERE DATE({}) = %s").format(
             sql.Identifier(search_column),
         )
     else:
@@ -170,16 +232,17 @@ def search(cursor):
         search_query = '%' + search_query + '%'
     try:
         cursor.execute(query, (search_query,))
-    except psycopg2.errors.InvalidDatetimeFormat:
-        print('Invalid format. Please input following this format (YYYY-MM-DD).')
-        return
-    
-    results = cursor.fetchall()
 
-    if (not results):
-        print('No matching results were found.')
-        return
+        results = cursor.fetchall()
 
-    print('\nID\tLead Name\tCustomer Name\tDate')
-    for lead in results:
-        print(f'{lead[0]}\t{lead[1]}\t\t{lead[2]}\t{lead[3]}')
+        if (not results):
+            print('No matching results were found.')
+            return
+
+        print('\nID\tLead Name\tCustomer Name\tDate')
+        for lead in results:
+            print(f'{lead[0]}\t{lead[1]}\t\t{lead[2]}\t{lead[3]}')
+
+    except psycopg2.Error:
+        print('Something went wrong')
+        return False
