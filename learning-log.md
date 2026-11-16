@@ -322,11 +322,11 @@ The complete workflow could look something like this:
 So we need to come up with some validation rules before starting to build the project.
 
 #### Required customer fields
-- Name: 2–100 characters.
-- Email: Valid format, normalized to lowercase.
-- Phone: Valid basic format, normalized.
+- Name: 2–50 characters.
+- Email: Valid format.
+- Phone: Valid basic format.
 - Service: Must match an allowed service.
-- Message: 10–2,000 characters.
+- Message: 5–2,000 characters.
 #### Required metadata
 - Lead ID: Valid UUID v4.
 - Created timestamp: Valid ISO 8601 timestamp.
