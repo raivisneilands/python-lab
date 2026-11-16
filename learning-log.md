@@ -290,3 +290,56 @@ AI found some issues and bugs in my code. The issues found and fixed:
 - SQL injection prevention
 - removed redundant try..except blocks.
 - proper transaction handling.
+
+## Chapter 4: n8n & Workflow automation
+
+It has been a few days since my last commit. But that is because I was setting up and learning n8n automation which is the next chapter in the AI Automation Roadmap. And after doing some research I can say, that n8n is a pretty powerful tool. It is possible to automate pretty much anything. I played around a bit and built my first workflow - it takes input from form, appends it to spreadsheet and then sends an email. And I have to say the feeling was pretty amazing when I saw that email.
+
+And setting up n8n itself was quite simple. All I had to do was run:
+```sh
+npm install -g n8n
+```
+And then run the n8n instance with:
+```sh
+n8n
+```
+Then wait for a moment and the n8n is ready for use in the browser. But a bit more complex was to set up the credentials which allows to use the API which allows to do all of the automation. But after some time I have it working.
+
+For now I have the n8n running only locally, but in the later chapters when I will learn Docker, I will be able to dockerize the n8n and host it on the VPS I rent.
+
+And for the project of this chapter, I have to create automated lead system. The idea I currently have is quite simple. It is going to be similar to the project of chapter 3. But this time I will focus more on n8n. Only thing that python will handle is take user input for the lead and then send an webhook to n8n where most of the flow will be automated. It will take the lead info and insert it into PostgreSQL database and then send a notification to my phone - most likely Telegram.
+
+The complete workflow could look something like this:
+#### Python
+1. The user submits the lead from the CLI.
+2. The lead gets validated and unique ID gets generated and the lead gets formatted as JSON. 
+#### n8n
+3. The lead gets sent to the n8n automated workflow via webhook.
+4. Then the lead gets compared to existing leads to check for duplicates.
+5. After every check is completed and no issues are found, then the lead gets inserted into database
+6. When insertion was successful, I get notified via Telegram or email, that new lead has appeared.
+
+So we need to come up with some validation rules before starting to build the project.
+
+#### Required customer fields
+- Name: 2–100 characters.
+- Email: Valid format, normalized to lowercase.
+- Phone: Valid basic format, normalized.
+- Service: Must match an allowed service.
+- Message: 10–2,000 characters.
+#### Required metadata
+- Lead ID: Valid UUID v4.
+- Created timestamp: Valid ISO 8601 timestamp.
+#### Duplicate handling
+- Existing UUID: Reject duplicate submission.
+- Different UUID with same email: Accept.
+- Different UUID with same phone: Accept.
+- Same customer submitting different services: Accept.
+#### Workflow rules
+- Invalid payload: Stop processing.
+- Valid payload: Check UUID against PostgreSQL.
+- New lead: Insert into PostgreSQL.
+- Successful insertion: Trigger Telegram notification.
+- Failed insertion: Do not send success notification.
+- Failed notification: Keep lead stored and allow notification retry.
+- Repeated request: Never create a second record for the same UUID.
