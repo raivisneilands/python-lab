@@ -339,7 +339,15 @@ So we need to come up with some validation rules before starting to build the pr
 - Invalid payload: Stop processing.
 - Valid payload: Check UUID against PostgreSQL.
 - New lead: Insert into PostgreSQL.
-- Successful insertion: Trigger Telegram notification.
+- Successful insertion: Trigger Telegram/Email notification.
 - Failed insertion: Do not send success notification.
 - Failed notification: Keep lead stored and allow notification retry.
 - Repeated request: Never create a second record for the same UUID.
+
+I have built the project which once again was not too difficult. It resulted into 2 files - `main.py` and `validator.py`. I decided to do it like this since most of the lifting was happening inside the n8n. 
+
+The `main.py` file is responsible for taking the user input, calling the `validator.py` file to validate the input, id generation using `uuid` module, and then creating the JSON payload and making a POST request to n8n webhook which triggers the workflow.
+
+And inside the `validator.py` file the validation happens. It checks whether the required fields are present, then it checks the length of the fields. And if something is wrong then `False` gets returned from the validator and the `main.py` doesn't trigger the POST request.
+
+And inside the n8n it first checks the PostgreSQL database to see if a lead with the id doesn't already exist. And if it exists then it stops the workflow. But if it doesn't then it inserts the lead in the database table with following fields - id_lead, name, email, phone, service, message, and created_at. The only nullable field is message. And after it has been inserted it sends an email that a new lead has been generated. And that is it.

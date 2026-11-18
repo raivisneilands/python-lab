@@ -34,11 +34,15 @@ def main():
 
     lead = {'id': id, 'name': name, 'email': email, 'phone': phone, 'service': service, 'message': message, 'created_at': created_at}
 
-    validator.validate(lead)
+    validated = validator.validate(lead)
 
-    res = requests.post(webhook_url, json=lead)
+    if (validated == True):
+        res = requests.post(webhook_url, json=lead)
+        print(f'Response status code: {res.status_code}\nResponse: {res.text}')
+    else:
+        print('Failed to validate the input.')
+        return
 
-    print(f'Response status code: {res.status_code}\nResponse: {res.text}')
 
 if __name__ == '__main__':
     main()
