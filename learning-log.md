@@ -307,6 +307,8 @@ Then wait for a moment and the n8n is ready for use in the browser. But a bit mo
 
 For now I have the n8n running only locally, but in the later chapters when I will learn Docker, I will be able to dockerize the n8n and host it on the VPS I rent.
 
+### Project 1: Automated Lead Management System
+
 And for the project of this chapter, I have to create automated lead system. The idea I currently have is quite simple. It is going to be similar to the project of chapter 3. But this time I will focus more on n8n. Only thing that python will handle is take user input for the lead and then send an webhook to n8n where most of the flow will be automated. It will take the lead info and insert it into PostgreSQL database and then send a notification to my phone - most likely Telegram.
 
 The complete workflow could look something like this:
@@ -350,4 +352,21 @@ The `main.py` file is responsible for taking the user input, calling the `valida
 
 And inside the `validator.py` file the validation happens. It checks whether the required fields are present, then it checks the length of the fields. And if something is wrong then `False` gets returned from the validator and the `main.py` doesn't trigger the POST request.
 
-And inside the n8n it first checks the PostgreSQL database to see if a lead with the id doesn't already exist. And if it exists then it stops the workflow. But if it doesn't then it inserts the lead in the database table with following fields - id_lead, name, email, phone, service, message, and created_at. The only nullable field is message. And after it has been inserted it sends an email that a new lead has been generated. And that is it.
+And inside the n8n it first checks the PostgreSQL database to see if a lead with the id doesn't already exist. And if it exists then it stops the workflow. But if it doesn't then it inserts the lead in the database table with following fields - id_lead, name, email, phone, service, message, and created_at. The only nullable field is message. And after it has been inserted it sends an email that a new lead has been generated. And that is it. 
+(Post project comment) - I actually don't know why I called it Automated Lead Management System since you can't manage the leads, you can only add them. I guess more suited name would be Automated Lead Pipeline System.
+
+### Project 2: Automated Order Management & Fulfillment System.
+
+I have decided that I should build a bit more complex projects as the last I built used only one database table. So the next project I will build is Automated Order Management & Fulfillment System.
+
+This project will use multiple database tables. The automated workflow will have error handling since the workflows I have built used no error handling at all. So this is something I will have to learn.
+
+Before building the project, let's map out what this project should solve and do. This project will allow businesses to automate order management. It could look something like this: 
+- Customer perspective: there are products displayed and I can select one or multiple products with different quantities. After I have selected them the program sends a webhook to the n8n automated workflow. And there most of the heavy lifting happens. First it checks whether the products are in stock, and if not then the order gets cancelled and I get informed that specific products are out of stock. If all products are in stock then it allows me to move forward. After the order has been registered I get a notification that order has been confirmed and the status gets changed to shipped. Then after simulating some time it will get changed to delivered and I will receive another notification that the order has been delivered and it is ready for pickup.
+- Business perspective: The project allows me to easily manage customer orders with little to no interaction. I will get notified that a new order has been made, I will be able to follow it (see the items, status, customer info). And I will also get notified when my inventory is getting low and I should order more (maybe I can automate this as well). I will also be able to easily track inventory changes (when user makes an order, inventory gets restocked). And I will also be able to track orders which are processing for too long to see if something has gone wrong. And also as a business owner I will be able to update stock (remove, add, change).
+
+And this could be like a summary for the project.
+
+Now that the idea is somewhat clear I start building it. First things I think it would be a good idea to focus on CLI side first. So first thing I will do is create the connection to the database via `database.py` file, which returns the connection and the cursor which will be used in other files.
+
+For this I created a new `.env` file in the project folder. I am using seperate `.env` files for each project to solidify my knowledge on how to use these environment files and the variables set in them.
