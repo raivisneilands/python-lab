@@ -370,3 +370,7 @@ And this could be like a summary for the project.
 Now that the idea is somewhat clear I start building it. First things I think it would be a good idea to focus on CLI side first. So first thing I will do is create the connection to the database via `database.py` file, which returns the connection and the cursor which will be used in other files.
 
 For this I created a new `.env` file in the project folder. I am using seperate `.env` files for each project to solidify my knowledge on how to use these environment files and the variables set in them.
+
+Next up I will create a menu, where user will be able to register either as a customer or as the business owner, then based on that the menu will change. The customer will be able to see browse products, add them to cart, and place the order which will trigger the n8n workflow. For this I probably won't use any authentification, I will just ask the user to log in either as a customer or business owner.
+
+To achieve this, I created a `authentication.py` file, which asks user to authenticate either as a customer or business owner and then returns that type. My reasoning is, that this is quite simple way to achieve this and I realize that this is not secure way to do this, but the goal of this project is to learn and practice n8n automation.
