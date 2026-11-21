@@ -24,7 +24,7 @@ def show_menu(user_type):
                 case _:
                     print('invalid choice')
         
-        case 'business_owner':
+        case 'business':
             print(business_menu)
             user_choice = input('Your selection: ')
             

@@ -376,3 +376,9 @@ Next up I will create a menu, where user will be able to register either as a cu
 To achieve this, I created a `authentication.py` file, which asks user to authenticate either as a customer or business owner and then returns that type. My reasoning is, that this is quite simple way to achieve this and I realize that this is not secure way to do this, but the goal of this project is to learn and practice n8n automation.
 
 Next up would be to show the menu based on the user type. I am thinking that a separate `menu.py` file where two menus are defined, and then the function inside this file could take user type as a parameter and then based on that return relevant menu. To achieve this I used nested `match` statements. The outer one determines the user type and asks for input, and the inner one then takes that input and then calls the relevant function. Currently it is with placeholder code.
+
+I just realized, that I have made a mistake. I wanted to also use a database table for customers, but currently it does not have an option to use that. To fix this I will change the schema to use the user type in the table and then I will pass the type to the menu. And inside the authentication I will ask for user credentials, which I probably will store in the database as encrypted value.
+
+I believe that I have corrected my mistake and now it is possible to create a new user and log in with that user. Currently the default user type is set to 'business', but that will change in near future. The default type most likely will be 'customer', and I am not sure whether I want multiple businesses. For now, only one business will exist.
+
+And now after user has authentificated, the user gets returned to the `main.py` file and then based on the user type, appropriate menu gets shown.
