@@ -382,3 +382,11 @@ I just realized, that I have made a mistake. I wanted to also use a database tab
 I believe that I have corrected my mistake and now it is possible to create a new user and log in with that user. Currently the default user type is set to 'business', but that will change in near future. The default type most likely will be 'customer', and I am not sure whether I want multiple businesses. For now, only one business will exist.
 
 And now after user has authentificated, the user gets returned to the `main.py` file and then based on the user type, appropriate menu gets shown.
+
+Next I probably should display all the products. I am thinking that I should display only those products which are in stock. And then for example if the user selects a product and sets the quantity to be more than the available, then the n8n will produce the error and then I will think what to do with that. 
+
+I am thinking that I will create separate files for functionality. Seperate for products, orders, customers. This will help me keep things organized.
+
+The first file will be `products.py`. This file will be responsible for displaying all products, adding products to cart which I have not how that will work yet. And maybe later on some sorting or searching functionality.
+
+While working on displaying all the available products, I discovered something which could be very useful. It is f-string formatting. I was already using these, but to just display variables. I had no idea that it can also do padding, aligning, decimal precision, and many other things. But now I do know this and I can make the CLI tables look nice and formatted.

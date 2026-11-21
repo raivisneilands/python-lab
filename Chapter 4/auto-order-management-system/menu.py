@@ -1,3 +1,5 @@
+import products
+
 customer_menu = """
 1 - Browse products
 2 - View cart
@@ -10,7 +12,7 @@ business_menu = """
 4 - Update inventory
 """
 
-def show_menu(user_type):
+def show_menu(user_type, cursor, connection):
     match user_type:
         case 'customer':
             print(customer_menu)
@@ -18,7 +20,7 @@ def show_menu(user_type):
             
             match user_choice:
                 case '1':
-                    print('see all products')
+                    products.get_all(cursor)
                 case '2':
                     print('see cart contents')
                 case _:
