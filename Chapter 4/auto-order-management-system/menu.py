@@ -1,4 +1,5 @@
 import products
+import cart
 
 customer_menu = """
 1 - Browse products
@@ -12,6 +13,8 @@ business_menu = """
 4 - Update inventory
 """
 
+user_cart = {}
+
 def show_menu(user_type, cursor, connection):
     match user_type:
         case 'customer':
@@ -20,7 +23,27 @@ def show_menu(user_type, cursor, connection):
             
             match user_choice:
                 case '1':
-                    products.get_all(cursor)
+                    product_data = products.get_all(cursor)
+                    
+                    print(f"{'ID':<6}{'Product':<30}{'Price':>12}{'Stock':>10}")
+
+                    for product in product_data:
+                        print(
+                            f"{product[0]:0>4d}  "
+                            f"{product[1]:<30}"
+                            f"{product[2]:>12.2f}"
+                            f"{product[3]:>10}"
+                        )
+
+                    item_id = int(input('Select the ID of the product to add to cart: '))
+                    item = product_data[item_id - 1]
+
+                    cart.add_to_cart(item, user_cart)
+                    cart.view_cart(user_cart)
+                    cart.remove_from_cart(item, user_cart)
+
+                    print(user_cart)
+
                 case '2':
                     print('see cart contents')
                 case _:
