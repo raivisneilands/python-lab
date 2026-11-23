@@ -394,3 +394,24 @@ While working on displaying all the available products, I discovered something w
 Next up I want to implement cart functionality. At least very basic one. User can add one item to cart. I decided to create a separate file for the cart features. It is called `cart.py`. It will have functions like `view_cart(cart)`, `add_to_cart(item, cart)`, `remove_from_cart(item)`. These are the basic functions it will have. I tried defining cart as a empty dictionary in this file and then the functions would manipulate with this cart, but that didn't work. I think the cart reset on each call. So I decided to define the empty cart dictionary in the caller file, which in this case is `menu.py` and then just pass the cart object to each function.
 
 I have built most basic and primitive cart functionality. And I do realize that the cart only exists while the python program is running, but I think that should be enough, because I only need the cart to be constructed and being sent to the n8n workflow. It doesn't have to remember what was in the cart after the program stops.
+
+But this is not ideal as user has to manually add products to cart one by one, so I have to update it to allow multiple products. I will ask the user for multiple IDs of the products, then add them to array, and then create a new array with the items to add based on the input IDs, and then simply pass that array to the function.
+
+Since I ask user to separate the IDs by whitespace, then I can simply use `split()` to automatically add the ID to array. Then I go over all products and compare the IDs, and if they match then I add the product to the array which is going to be sent to the function. At first it wasn't working because the IDs were not the same type. `split()` returned array of strings, but the actual products had integer IDs, so I converted them to string and then made the comparison.
+
+This took some more time but eventually I also implemented the same functionality to remove multiple items from cart. This took some more time because I compared the IDs wrong again, but this time it wasn't a type issue but what I wrote as the ID. At first I wrote the loop like this:
+```python
+for product in cart:
+    if (str(product[0]) in item_ids):
+        print(f'Deleting item with key: {cart[product][1]}')
+        cart.pop(cart[product][1])
+```
+And there were multiple issues with this code. And `cart` here is a dictionary with all the items, for example: 
+```
+{'Laptop Lenovo ThinkPad': (1, 'Laptop Lenovo ThinkPad', Decimal('899.99'), 12)}
+```
+And `product[0]` would return the first letter of the key, in this case 'L'. And this way it will never match what is in `item_ids` which are numbers. So the fix was to use `cart[product][0]` instead which correctly returns the ID.
+
+And the second issue was that once I deleted something from the dictionary, it would return `RuntimeError: Dictionary size was changed during iteration` which makes sense because the iterable object is not the same anymore after deleting an item. To fix this I made a copy using `list(cart)` and the rest of the loop remained the same.
+
+And for me to not restart the app constantly after one action, I introduced a `while(True)` loop to allow me to make multiple actions. And to simply quit the program I have to input 4 then the loop breaks.
