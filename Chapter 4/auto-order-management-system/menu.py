@@ -15,8 +15,9 @@ business_menu = """
 1 - Inventory
 2 - View customers
 3 - Update inventory
-4 - View placed orders
-5 - Exit
+4 - View inventory changes
+5 - View placed orders
+6 - Exit
 """
 
 user_cart = {}
@@ -70,10 +71,12 @@ def show_menu(user_type, cursor, connection):
                     case '2':
                         business.view_customers(cursor)
                     case '3':
-                        print('Update inventory')
+                        business.update_inventory(cursor, connection)
                     case '4':
-                        print('View placed orders')
+                        print('View inventory changes')
                     case '5':
+                        print('View placed orders')
+                    case '6':
                         break
                     case _:
                         print('invalid choice')

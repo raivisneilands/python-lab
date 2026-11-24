@@ -2,7 +2,8 @@
 def get_all(cursor):
     cursor.execute("""
         SELECT * FROM products
-        WHERE in_stock > 0;
+        WHERE in_stock > 0
+        ORDER BY id_product ASC;
     """)
 
     products = cursor.fetchall()
