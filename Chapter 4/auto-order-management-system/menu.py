@@ -1,6 +1,7 @@
 import products
 import cart
 import webhook
+import business
 
 customer_menu = """
 1 - Browse products
@@ -12,9 +13,9 @@ customer_menu = """
 
 business_menu = """
 1 - Inventory
-2 - Customers
-3 - Orders
-4 - Update inventory
+2 - View customers
+3 - Update inventory
+4 - View placed orders
 5 - Exit
 """
 
@@ -59,20 +60,23 @@ def show_menu(user_type, cursor, connection):
                         print('Invalid choice')
         
         case 'business':
-            print(business_menu)
-            user_choice = input('Your selection: ')
+            while (True):
+                print(business_menu)
+                user_choice = input('Your selection: ')
+                
+                match user_choice:
+                    case '1':
+                        products.get_all(cursor)
+                    case '2':
+                        business.view_customers(cursor)
+                    case '3':
+                        print('Update inventory')
+                    case '4':
+                        print('View placed orders')
+                    case '5':
+                        break
+                    case _:
+                        print('invalid choice')
             
-            match user_choice:
-                case '1':
-                    products.get_all(cursor)
-                case '2':
-                    print('view customers')
-                case '3':
-                    print('view placed orders')
-                case '4':
-                    print('update inventory stock')
-                case _:
-                    print('invalid choice')
-        
         case _:
             print('Invalid user type')
