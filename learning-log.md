@@ -415,3 +415,7 @@ And `product[0]` would return the first letter of the key, in this case 'L'. And
 And the second issue was that once I deleted something from the dictionary, it would return `RuntimeError: Dictionary size was changed during iteration` which makes sense because the iterable object is not the same anymore after deleting an item. To fix this I made a copy using `list(cart)` and the rest of the loop remained the same.
 
 And for me to not restart the app constantly after one action, I introduced a `while(True)` loop to allow me to make multiple actions. And to simply quit the program I have to input 4 then the loop breaks.
+
+Now I will create `webhook.py` file in which I will send the order webhook to the n8n workflow. And later on I will handle it. For now it will have a placeholder code. For now it has only one function `send(cart)` which sends prepares the payload and sends the webhook. It receives the cart and then it sends that cart to the n8n.
+
+Additionally I made a small change to `products.get_all()` function. Before it didn't print out the products, it only returned them. But now it does both. I did this, so I did not have to repeat the printing out for business menu.

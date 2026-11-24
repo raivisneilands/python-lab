@@ -1,11 +1,13 @@
 import products
 import cart
+import webhook
 
 customer_menu = """
 1 - Browse products
 2 - View cart
 3 - Remove items from cart
-4 - Exit
+4 - Confirm and place order
+5 - Exit
 """
 
 business_menu = """
@@ -28,16 +30,6 @@ def show_menu(user_type, cursor, connection):
                 match user_choice:
                     case '1':
                         product_data = products.get_all(cursor)
-                        
-                        print(f"{'ID':<6}{'Product':<30}{'Price':>12}{'Stock':>10}")
-
-                        for product in product_data:
-                            print(
-                                f"{product[0]:0>4d}  "
-                                f"{product[1]:<30}"
-                                f"{product[2]:>12.2f}"
-                                f"{product[3]:>10}"
-                            )
 
                         item_ids = input('Select the IDs of the products to add to cart (separated by space, e.g. "1 3 5 8 11 16"): ')
                         item_ids = item_ids.split()
@@ -55,9 +47,16 @@ def show_menu(user_type, cursor, connection):
                     case '3':
                         cart.remove_from_cart(user_cart)
                     case '4':
+                        cart.view_cart(user_cart)
+                        confirmation = input('Are you sure you want to place the order with these items? y/n: ')
+                        if (confirmation.lower() == 'y'):
+                            webhook.send(user_cart)
+                        else:
+                            print('Cancelling the order. Returning.')
+                    case '5':
                         break
                     case _:
-                        print('invalid choice')
+                        print('Invalid choice')
         
         case 'business':
             print(business_menu)
@@ -65,7 +64,7 @@ def show_menu(user_type, cursor, connection):
             
             match user_choice:
                 case '1':
-                    print('view inventory')
+                    products.get_all(cursor)
                 case '2':
                     print('view customers')
                 case '3':
