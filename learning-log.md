@@ -429,3 +429,19 @@ Next I will implement update inventory feature. I think a good way to implement 
 And now to think of it the business should also be able to see inventory changes. But now the priority is to update inventory feature, which was a bit longer than expected. So in the end my decision was to make a function `update_inventory(cursor, connection)` which then asks user what he would like to do, and then based on that it calls another function - `add_product(cursor, connection)`, `update_product(cursor, connection)`, or `delete_product(cursor, connection)`. I am passing connection to these three functions because they change the data stored in the database and I am using `connection.commit()` to actually commit these changes. And to add multiple products, I am simply asking user how many products to add and then using a `for` loop I call `add_product(cursor, connection)` function. 
 
 And when user would like to update product, then option gets presented - change name and/or price or change stock. I did this this way, because if user would like to change stock, then it executes two queries - one that updates the products table, and other that updates inventory_log table. But if the user updates only the name or price then it updates only the products table.
+
+Next feature I will work on is the inventory change list. Since it is stored inside database table, then it shouldn't be too difficult to implement, only thing what I will have to do is display product name which is referenced. This should be possible with JOIN clause in the query.
+
+I create a function `view_inventory_changes(cursor)` which executes a SQL query which returns results from the mentioned table and simply displays it.
+
+At first I struggled a bit with the query and how exactly to JOIN both tables, but then I looked it up and wrote it successfully.
+
+Another issue was with how to show whether the change was positive or negative. Because negative change was stored like this '-4', but positive was without a sign, so I wanted to include the sign as well. At first I simply tried it like this:
+```python
+log[1] = '+' + str(log[1]) if log[1] > 0 else log[1]
+```
+where `log` is a tuple representing the return row and `log[1]` is the change column. But this did not work, because in python tuples are immutable, which means they can't be changed after creation. The simple way I solved this:
+```python
+stock_change = '+' + str(log[1]) if log[1] > 0 else log[1]
+```
+This way I am simply conditionally assigning the value to variable without trying to change tuple value.

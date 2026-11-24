@@ -197,3 +197,30 @@ def delete_product(cursor, connection):
     print('Returning...')
     return
 
+def view_inventory_changes(cursor):
+    try:
+        cursor.execute("""
+            SELECT p.name, i.change, i.reason, i.log_date FROM inventory_log as i
+            INNER JOIN products as p
+            ON i.product_id = p.id_product
+        """)
+
+        results = cursor.fetchall()
+
+        if (not results):
+            print('No changes have been made.')
+            return
+
+        print(f'{'Product Name':<30}{'Stock change':<15}{'Reason':<40}{'Log date and time':<30}')
+
+        for log in results:
+            stock_change = '+' + str(log[1]) if log[1] > 0 else log[1]
+            print(
+                f'{log[0]:<30}'
+                f'{stock_change:<15}'
+                f'{log[2]:<40}'
+                f'{log[3].strftime("%Y-%m-%d %H:%M:%S"):<30}'
+            )
+
+    except Exception as e:
+        print(f'Something went wrong: {e}')

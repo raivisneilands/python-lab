@@ -73,7 +73,7 @@ def show_menu(user_type, cursor, connection):
                     case '3':
                         business.update_inventory(cursor, connection)
                     case '4':
-                        print('View inventory changes')
+                        business.view_inventory_changes(cursor)
                     case '5':
                         print('View placed orders')
                     case '6':
