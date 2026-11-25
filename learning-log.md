@@ -445,3 +445,20 @@ where `log` is a tuple representing the return row and `log[1]` is the change co
 stock_change = '+' + str(log[1]) if log[1] > 0 else log[1]
 ```
 This way I am simply conditionally assigning the value to variable without trying to change tuple value.
+
+Before starting to work on n8n I should implement the product quantities when adding to cart. The way I plan to implement is loop through the items user wishes to add to cart, and then ask how many products, where 1 will be default value. And then I will add the quantity to the payload probably.
+
+Because of the way I handled adding quantites, I had to make some changes to all `cart.py` functions. This is the way I decided to add quantities to cart:
+```
+{'Laptop Lenovo ThinkPad': {'Product': (1, 'Laptop Lenovo ThinkPad', Decimal('899.99'), 12), 'Quantity': 1}}
+```
+Each item has a dictionary object with product tuple and quantity integer. And I display values like this:
+```python
+print(
+    f"{cart[item]['Product'][0]:0>4d}  "
+    f"{cart[item]['Product'][1]:<40}"
+    f"{cart[item]['Product'][2]:<12.2f}"
+    f"{cart[item]['Quantity']:>8}"
+)
+```
+And I had to change all `cart.py` functions to use this format to access the products. As for the remove function, I decided to simply warn the user that if the quantity of product is 3, then all 3 products will be removed from cart.

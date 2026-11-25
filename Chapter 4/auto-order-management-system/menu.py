@@ -40,9 +40,14 @@ def show_menu(user_type, cursor, connection):
 
                         for product in product_data:
                             if (str(product[0]) in item_ids):
-                                items_to_add[product[1]] = product
+                                quantity = int(input(f'Enter the quantity of {product[1]} you wish to add: '))
+                                items_to_add[product[1]] = {'Product': product, 'Quantity': quantity}
+
+                        print(items_to_add)
                                 
-                        cart.add_to_cart(items_to_add, user_cart)                  
+                        cart.add_to_cart(items_to_add, user_cart)
+
+                        print(user_cart)                  
 
                     case '2':
                         cart.view_cart(user_cart)
