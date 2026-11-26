@@ -462,3 +462,5 @@ print(
 )
 ```
 And I had to change all `cart.py` functions to use this format to access the products. As for the remove function, I decided to simply warn the user that if the quantity of product is 3, then all 3 products will be removed from cart.
+
+Okay, now when all crucial parts are implemented, we can now send the order to the n8n and then the automation can begin.
