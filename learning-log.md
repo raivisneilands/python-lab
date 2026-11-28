@@ -471,3 +471,11 @@ When sending the order I forgot to add customer ID, because that also is stored 
 - And then when user is happy with the cart and wants to confirm the order, I additionally to the cart I pass the user to the `webhook.py` so I can add the user ID to the payload which will be stored inside the database.
 
 And while I am here, I might as well add total price to payload.
+
+I decided that I will not track the orders which are processing too long. Since I don't have a reason to in this case, because the order status changes inside a sub-workflow which changes the status after 20 seconds to 'SHIPPED', and then after 15 seconds it changes to 'READY_FOR_PICKUP' so there aren't any way the order could go wrong. At least that is what I think.
+
+And as for the last thing of the project, I need to implement order viewing for the business owner. And this will be done by executing a query, most likely using JOIN operation so I can also get products. This is where the connecting table 'order_items' will come in handy.
+
+The SQL query was quite complicated. I had to connect 4 tables, because I wanted to display customer name, order ID, order date, and list of products. So 3 JOIN opearations were used, and the query itself was quite long. I also used STRING_AGG() to list all products for the order. It took two arguments - first the strings which to combine and then the separator.
+
+And with this the project is considered as complete. This project was a lot more complex than previous projects I built, and because of that I feel a lot better about completing this project. And moving forwards, I think I will build one small project and one more advanced project to really test my skills. And I think the goal was achieved of this chapter because I have learned a lot about n8n platform and how to use it. And I will say again that n8n is super powerful tool which can simplify everyday life. It can be used to automate pretty much anything if I have enough skills and creativity. Of course I used only most basic nodes like trigger nodes (manual, sub-workflows), if node, merge, split out, aggregate, but I feel quite comfortable with them.

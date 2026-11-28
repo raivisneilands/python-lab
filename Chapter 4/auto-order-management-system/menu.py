@@ -76,7 +76,7 @@ def show_menu(user, cursor, connection):
                     case '4':
                         business.view_inventory_changes(cursor)
                     case '5':
-                        print('View placed orders')
+                        business.view_orders(cursor)
                     case '6':
                         break
                     case _:

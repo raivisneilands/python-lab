@@ -224,3 +224,49 @@ def view_inventory_changes(cursor):
 
     except Exception as e:
         print(f'Something went wrong: {e}')
+
+def view_orders(cursor):
+    try:
+        cursor.execute("""
+            SELECT
+                o.id_order AS order_id,
+                o.created_at,
+                c.first_name, c.last_name,
+                STRING_AGG(p.name, ', ') AS products
+            FROM orders o
+            JOIN customers c
+                ON o.customer_id = c.id_customer
+            JOIN order_items oi
+                ON o.id_order = oi.order_id
+            JOIN products p
+                ON oi.product_id = p.id_product
+            GROUP BY
+                o.id_order,
+                o.created_at,
+                c.first_name,
+                c.last_name
+            ORDER BY
+                o.created_at DESC,
+                o.id_order DESC;
+        """)
+
+        orders = cursor.fetchall()
+
+        if (not orders):
+            print('No orders were found. Returning.')
+            return
+
+        print(
+            f'{'Order ID':<40}{'Date and time':<22}{'Customer':<30}{'Products'}'
+        )
+
+        for order in orders:
+            print(
+                f'{order[0]:<40}'
+                f'{datetime.datetime.strptime(order[1], '%Y-%m-%dT%H:%M:%S.%f%z').strftime("%Y-%m-%d %H:%M:%S"):<22}'
+                f'{order[2] + ' ' + order[3]:<30}'
+                f'{order[4]}'
+            )
+    except Exception as e:
+        print(f'Something went wrong: {e}')
+        return
