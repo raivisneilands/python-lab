@@ -464,3 +464,10 @@ print(
 And I had to change all `cart.py` functions to use this format to access the products. As for the remove function, I decided to simply warn the user that if the quantity of product is 3, then all 3 products will be removed from cart.
 
 Okay, now when all crucial parts are implemented, we can now send the order to the n8n and then the automation can begin.
+
+When sending the order I forgot to add customer ID, because that also is stored inside the database. To achieve this I had to change few things.
+- When user is authenticating, I also had to return the ID of the user which I was not doing.
+- Then instead of passing only the user type to the `menu.py`, I pass the entire user to it and then parse the user type inside that file.
+- And then when user is happy with the cart and wants to confirm the order, I additionally to the cart I pass the user to the `webhook.py` so I can add the user ID to the payload which will be stored inside the database.
+
+And while I am here, I might as well add total price to payload.

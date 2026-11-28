@@ -22,8 +22,8 @@ business_menu = """
 
 user_cart = {}
 
-def show_menu(user_type, cursor, connection):
-    match user_type:
+def show_menu(user, cursor, connection):
+    match user['user_type']:
         case 'customer':
             while (True):
                 print(customer_menu)
@@ -42,12 +42,8 @@ def show_menu(user_type, cursor, connection):
                             if (str(product[0]) in item_ids):
                                 quantity = int(input(f'Enter the quantity of {product[1]} you wish to add: '))
                                 items_to_add[product[1]] = {'Product': product, 'Quantity': quantity}
-
-                        print(items_to_add)
                                 
-                        cart.add_to_cart(items_to_add, user_cart)
-
-                        print(user_cart)                  
+                        cart.add_to_cart(items_to_add, user_cart)            
 
                     case '2':
                         cart.view_cart(user_cart)
@@ -57,7 +53,7 @@ def show_menu(user_type, cursor, connection):
                         cart.view_cart(user_cart)
                         confirmation = input('Are you sure you want to place the order with these items? y/n: ')
                         if (confirmation.lower() == 'y'):
-                            webhook.send(user_cart)
+                            webhook.send(user, user_cart)
                         else:
                             print('Cancelling the order. Returning.')
                     case '5':

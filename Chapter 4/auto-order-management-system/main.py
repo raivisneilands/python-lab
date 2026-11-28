@@ -27,7 +27,7 @@ def main():
         print('Failed to find user. Exiting.')
         return
 
-    menu.show_menu(user['user_type'], cursor, connection)
+    menu.show_menu(user, cursor, connection)
 
 if __name__ == '__main__':
     main()

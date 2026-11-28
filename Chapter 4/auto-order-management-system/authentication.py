@@ -18,13 +18,17 @@ def register(cursor, connection):
             INSERT INTO customers
             (first_name, last_name, email, phone, type, password)
             VALUES (%s, %s, %s, %s, %s, %s)
+            RETURNING id_customer
         """, (f_name, l_name, email, phone, user_type, hashed_password))
+
+        data = cursor.fetchone()
 
         connection.commit()
 
         print('User created successfully')
 
         user = {
+            'id_user': data[0],
             'f_name': f_name, 
             'l_name': l_name,
             'email': email, 
@@ -66,6 +70,7 @@ def login(cursor, connection):
         print('Login successful!')
 
         user = {
+            'id_user': user[0],
             'f_name': user[1], 
             'l_name': user[2],
             'email': user[3], 
